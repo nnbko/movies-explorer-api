@@ -5,7 +5,8 @@ const ErrorBadRequest = require('../constants/ErrorBadRequest');
 const ErrorForbidden = require('../constants/ErrorForbidden');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find()
+  const userId = req.user._id;
+  Movie.find({ owner: userId })
     .then((movie) => { res.send(movie); })
     .catch(next);
 };
@@ -21,7 +22,7 @@ module.exports.createMovie = (req, res, next) => {
     thumbnail,
     movieId,
     nameRU,
-    nameEN
+    nameEN,
   } = req.body;
   const owner = req.user._id;
 
@@ -37,12 +38,15 @@ module.exports.createMovie = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
-    owner })
+    owner,
+  })
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new ErrorNotFound('Карточка не найдена'));
+        next(new ErrorBadRequest('Переданы некорректные данные'));
+        return;
       }
+      next(err);
     });
 };
 module.exports.deleteMovie = (req, res, next) => {

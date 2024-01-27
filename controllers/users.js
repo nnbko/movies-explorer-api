@@ -67,6 +67,10 @@ module.exports.updateUserData = (req, res, next) => {
         next(new ErrorBadRequest('Переданы некорректные данные'));
         return;
       }
+      if (err.name === 'CastError') {
+        next(new ErrorBadRequest('Переданы некорректные данные'));
+        return;
+      }
       next(err);
     });
 };
