@@ -67,8 +67,8 @@ module.exports.updateUserData = (req, res, next) => {
         next(new ErrorBadRequest('Переданы некорректные данные'));
         return;
       }
-      if (err.name === 'CastError') {
-        next(new ErrorBadRequest('Переданы некорректные данные'));
+      if (err.code === MONGODB_DUPLICATE_ERROR_CODE) {
+        next(new ErrorConflict('Пользователь с такой почтой уже существует'));
         return;
       }
       next(err);
