@@ -49,7 +49,6 @@ const validateCardId = celebrate({
 module.exports = {
   validateCreateUser,
   validateLogin,
-  validateUserId,
   validateUpadteUser,
   validateCreateCard,
   validateCardId,
