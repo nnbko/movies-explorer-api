@@ -17,7 +17,7 @@ const { login, createUser } = require('./controllers/users');
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:3000', 'https://nnbkodip.nomoredomainswork.ru'] }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://nnbkodip.nomoredomainswork'] }));
 mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : 'mongodb://127.0.0.1/bitfilmsdb');
 app.use(requestLogger);
 
